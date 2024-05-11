@@ -1,17 +1,9 @@
-import { View, Text, Button } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { View, Text} from 'react-native'
 
 export default function Tela1() {
-
-  const nav = useNavigation();
   return (
-
     <View>
-      <Text>Tela1</Text>
-      <Button
-      title='Fazer Pedido'
-      onPress={ () => nav.navigate("TelaBolos")}
-      />
+      <Text>Tela de inicio. Colocar promoções, foto e informações da empresa.</Text>
     </View>
   )
 }
