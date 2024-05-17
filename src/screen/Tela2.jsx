@@ -1,81 +1,123 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SectionList, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, SectionList, Alert } from 'react-native';
+import { Button } from '@rneui/themed';
 
+// json com as informações sobre os bolos
 const DATA = [
   {
     title: 'Recheio',
     data: [
-      { title: 'Chocolate', price: 5.00 },
-      { title: 'Morango', price: 4.50 },
-      { title: 'Baunilha', price: 4.00 },
+      { title: 'Chocolate', price: 20.00 },
+      { title: 'Morango', price: 22.50 },
+      { title: 'Baunilha', price: 24.00 },
     ],
   },
   {
     title: 'Cobertura',
     data: [
-      { title: 'Chocolate', price: 3.00 },
-      { title: 'Morango', price: 2.50 },
-      { title: 'Creme de leite', price: 3.50 },
+      { title: 'Ganache', price: 23.00 },
+      { title: 'Chantilly', price: 22.50 },
+      { title: 'Merengue', price: 23.50 },
     ],
   },
   {
     title: 'Decoração',
     data: [
-      { title: 'Chocolate', price: 3.00 },
-      { title: 'Morango', price: 2.50 },
-      { title: 'Creme de leite', price: 3.50 },
+      { title: 'Chocolate', price: 13.00 },
+      { title: 'Frutas', price: 12.50 },
+      { title: 'Chantilly', price: 13.50 },
     ],
   },
   {
     title: 'Formato',
     data: [
-      { title: 'Chocolate', price: 3.00 },
-      { title: 'Morango', price: 2.50 },
-      { title: 'Creme de leite', price: 3.50 },
+      { title: 'Quadrado', price: 0.00 },
+      { title: 'Redondo', price: 12.50 },
+      { title: 'Coração', price: 23.50 },
     ],
   },
   {
     title: 'Tamanho',
     data: [
-      { title: 'Chocolate', price: 3.00 },
-      { title: 'Morango', price: 2.50 },
-      { title: 'Creme de leite', price: 3.50 },
+      { title: '40 fatias', price: 103.00 },
+      { title: '60 fatias', price: 122.50 },
+      { title: '80 fatias', price: 153.50 },
     ],
   },
 ];
 
 export default function Tela2({ navigation }) {
-  const [selectedRecheioIndex, setSelectedRecheioIndex] = useState(null);
-  const [selectedCoberturaIndex, setSelectedCoberturaIndex] = useState(null);
 
-  const handleFinalizar = () => {
-    if (selectedRecheioIndex === null || selectedCoberturaIndex === null) {
-      Alert.alert('Erro', 'Por favor, selecione um recheio e uma cobertura.');
+  const [recheioSelecionado, setRecheioSelecionado] = useState(null);
+  const [coberturaSelecionada, setCoberturaSelecionada] = useState(null);
+  const [decoracaoSelecionada, setDecoracaoSelecionada] = useState(null);
+  const [formatoSelecionado, setFormatoSelecionado] = useState(null);
+  const [tamanhoSelecionado, setTamanhoSelecionado] = useState(null);
+  
+  //F chamada quando o botao de finalizar é selecionado, para verificar se não falta nenhuma informação
+  const botaoFinalizar = () => {
+    if (recheioSelecionado === null) {
+      Alert.alert('Erro', 'Por favor, selecione um recheio.');
       return;
-    }
-
+    } else if(coberturaSelecionada === null){
+      Alert.alert('Erro', 'Por favor, selecione uma cobertura.');
+      return;
+    } else if(decoracaoSelecionada === null){
+      Alert.alert('Erro', 'Por favor, selecione uma decoração.');
+      return;
+    } else if(formatoSelecionado === null){
+      Alert.alert('Erro', 'Por favor, selecione um formato.');
+      return;
+    } else if(tamanhoSelecionado === null){
+      Alert.alert('Erro', 'Por favor, selecione um tamanho.');
+      return;
+    } 
+      //Se não falta informação, segue para a tela3
     navigation.navigate('TelaConfirmacao', {
-      recheioTitulo: DATA[0].data[selectedRecheioIndex].title,
-      recheioValor: DATA[0].data[selectedRecheioIndex].price,
-      cobertura: DATA[1].data[selectedCoberturaIndex].title,
+      recheioTitulo: DATA[0].data[recheioSelecionado].title,
+      recheioPreco: DATA[0].data[recheioSelecionado].price,
+      coberturaTitulo: DATA[1].data[coberturaSelecionada].title,
+      coberturaPreco: DATA[1].data[coberturaSelecionada].price,
+      decoracaoTitulo: DATA[2].data[decoracaoSelecionada].title,
+      decoracaoPreco: DATA[2].data[decoracaoSelecionada].price,
+      formatoTitulo: DATA[3].data[formatoSelecionado].title,
+      formatoPreco: DATA[3].data[formatoSelecionado].price,
+      tamanhoTitulo: DATA[4].data[tamanhoSelecionado].title,
+      tamanhoPreco: DATA[4].data[tamanhoSelecionado].price,
     });
   };
 
   return (
+
     <View style={styles.container}>
       <SectionList
         sections={DATA}
         keyExtractor={(item, index) => item.title + index}
         renderItem={({ item, index, section }) => (
-          <View style={styles.item}>
+          <View
+            style={[
+              styles.item,
+              (section.title === 'Recheio' && recheioSelecionado === index) ||
+              (section.title === 'Cobertura' && coberturaSelecionada === index) ||
+              (section.title === 'Decoração' && decoracaoSelecionada === index) ||
+              (section.title === 'Formato' && formatoSelecionado === index) ||
+              (section.title === 'Tamanho' && tamanhoSelecionado === index)
+                ? styles.itemSelecionado: null,
+            ]}
+          >
             <Text
-              style={section.title === 'Recheio' && selectedRecheioIndex === index ||
-                     section.title === 'Cobertura' && selectedCoberturaIndex === index ? styles.selected : styles.title}
+              style={styles.title}
               onPress={() => {
                 if (section.title === 'Recheio') {
-                  setSelectedRecheioIndex(index);
+                  setRecheioSelecionado(index);
                 } else if (section.title === 'Cobertura') {
-                  setSelectedCoberturaIndex(index);
+                  setCoberturaSelecionada(index);
+                }else if (section.title === 'Decoração') {
+                  setDecoracaoSelecionada(index);
+                }else if (section.title === 'Formato') {
+                  setFormatoSelecionado(index);
+                }else if (section.title === 'Tamanho') {
+                  setTamanhoSelecionado(index);
                 }
               }}
             >
@@ -89,17 +131,18 @@ export default function Tela2({ navigation }) {
       />
       <Button
         title="Finalizar"
-        onPress={handleFinalizar}
+        onPress={botaoFinalizar}
         buttonStyle={styles.button}
       />
     </View>
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 16,
   },
   header: {
     fontSize: 22,
@@ -108,21 +151,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   item: {
-    padding: 10,
+    marginVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
+    padding: 20,
+    borderStyle: 'solid',
+    backgroundColor: '#D2C4D8',
+  },
+  itemSelecionado: {
+    backgroundColor: '#BEA0C0',
+    fontWeight: 'bold',
   },
   title: {
     fontSize: 18,
   },
-  selected: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'blue',
-  },
   button: {
     marginTop: 10,
-    backgroundColor: 'blue',
+    backgroundColor: 'rgba(255,102,196, 1)',
     borderRadius: 25,
-  },
+  }, 
 });

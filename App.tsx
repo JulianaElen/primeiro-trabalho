@@ -10,7 +10,6 @@ import Tela3 from './src/screen/Tela3';
 
 export default function App() {
   return (
-    // Cria o Tab Button para navegação entre as telas de inicio, compra e carrinho.
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
