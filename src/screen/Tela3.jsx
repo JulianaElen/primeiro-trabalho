@@ -1,15 +1,16 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Button } from '@rneui/base';
+import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
 
-export default function Tela3({ navigation }) {
+export default function Tela3({ route }) {
+  const { recheioTitulo, recheioValor, cobertura } = route.params;
+  const [totalPrice, setTotalPrice] = useState(0);
+
   return (
     <View>
-      <Text>Tela de carrinho. Com lista de coisas que a pessoa escolheu para comprar e preco total.</Text>
-      <Button
-        title="Confirmar"
-        onPress={() => navigation.navigate('TelaConfirmacao')}
-      />
+      <Text>Confirmação do Pedido</Text>
+      <Text>Recheio selecionado: {recheioTitulo}</Text>
+      <Text>Valor do recheio: R$ {recheioValor}</Text>
+      <Text>Cobertura selecionada: {cobertura}</Text>
     </View>
-  )
+  );
 }
