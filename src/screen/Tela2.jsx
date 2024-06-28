@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, SectionList, Alert } from 'react-native';
 import { Button } from '@rneui/themed';
 
+// Tela de compras que tem as informações sobre os bolos
+
 // json com as informações sobre os bolos
 const DATA = [
   {
@@ -54,7 +56,7 @@ export default function Tela2({ navigation }) {
   const [formatoSelecionado, setFormatoSelecionado] = useState(null);
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState(null);
   
-  //F chamada quando o botao de finalizar é selecionado, para verificar se não falta nenhuma informação
+  //chamada quando o botao de finalizar é selecionado, para verificar se não falta nenhuma informação
   const botaoFinalizar = () => {
     if (recheioSelecionado === null) {
       Alert.alert('Erro', 'Por favor, selecione um recheio.');
@@ -157,6 +159,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderStyle: 'solid',
     backgroundColor: '#D2C4D8',
+    borderRadius: 50,
   },
   itemSelecionado: {
     backgroundColor: '#BEA0C0',

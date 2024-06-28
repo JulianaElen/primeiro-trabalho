@@ -1,9 +1,10 @@
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet, Alert, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {Button} from '@rneui/themed';
+import {Button, Input, Text, color} from '@rneui/base';
+import {blue} from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 
-//Tela inicial do usuario (fazer pedido e ver pedidos)
-export default function Tela1({navigation}) {
+// Tela de login com opções de entrar
+export default function Tela4({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.imgSuperiorContainer}>
@@ -20,19 +21,19 @@ export default function Tela1({navigation}) {
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          title="Meus Pedidos"
-          onPress={() => navigation.navigate('TelaPedidos')}
+          title="Entrar"
+          onPress={() => navigation.navigate('TelaInicial')}
           buttonStyle={styles.button}
           titleStyle={styles.buttonTitle}
           containerStyle={styles.buttonInnerContainer}
         />
-        <Button
-          title="Novo Pedido"
-          onPress={() => navigation.navigate('TelaCompras')}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonTitle}
-          containerStyle={styles.buttonInnerContainer}
-        />
+      </View>
+      <View style={styles.containerInfo}>
+        <TouchableOpacity onPress={() => navigation.navigate('TelaInfo')}>
+          <Text style={styles.textoInfo}>
+            Para informações sobre o aplicativo, clique aqui!
+          </Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.imgInferiorContainer}>
         <Image
@@ -46,22 +47,18 @@ export default function Tela1({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     flex: 1,
     justifyContent: 'space-between',
   },
   imgSuperiorContainer: {
-    flex: 1,
-    alignItems: 'left',
-    marginTop: 0,
-    marginBottom: 0,
+    alignItems: 'flex-start',
   },
   imgSuperior: {
     width: 350,
     height: 150,
   },
   imgLogoContainer: {
-    flex: 2,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -71,10 +68,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   imgInferiorContainer: {
-    flex: 1,
     alignItems: 'flex-end',
-    marginBottom: 0,
-    marginTop: 0,
   },
   imgInferior: {
     width: 350,
@@ -96,5 +90,23 @@ const styles = StyleSheet.create({
     height: 50,
     width: 200,
     marginTop: 10,
+    marginBottom: 20,
+  },
+  input: {
+    borderColor: 'black',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    height: 40,
+  },
+  containerInfo: {
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  textoInfo: {
+    color: '#701198',
+    fontSize: 15,
+    textDecorationLine: 'underline',
+    
   },
 });
